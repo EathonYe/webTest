@@ -3,8 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <title>queryUser</title>
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+    <style>
+        .my-input {
+            width: 200px;
+            border: none;
+            border-bottom: 2px solid #333;
+            outline: none;
+            transition: width 0.5s;
+            color: #aeaeae;
+        }
+        .my-input:focus {
+            width: 250px;
+            font-size: 16px;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to the page of queryUser.</h1>
+
+    <div class="container">
+        <div style="text-align: right;padding: 20px 0px;">
+            <input type="text" class="my-input" placeholder="search.">
+            <div class="btn-group" role="group">
+                <button class="btn btn-warning"><span class="glyphicon glyphicon-search">&nbsp;</span>查询</button>
+                <button class="btn btn-primary"><span class="glyphicon glyphicon-plus">&nbsp;</span>添加</button>
+                <button class="btn btn-info"><span class="glyphicon glyphicon-pencil">&nbsp;</span>编辑</button>
+                <button class="btn btn-danger"><sapn class="glyphicon glyphicon-trash">&nbsp;</sapn>删除</button>
+            </div>
+        </div>
+
+        <div class="panel panel-success">
+            <div class="panel-heading">Panel heading.</div>
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>sex</th>
+                    <th>age</th>
+                </tr>
+                <tr>
+                    <td>Eathon</td>
+                    <td>男</td>
+                    <td>23</td>
+                </tr>
+                <tr>
+                    <td>Eathon</td>
+                    <td>男</td>
+                    <td>23</td>
+                </tr>
+                <tr>
+                    <td>Eathon</td>
+                    <td>男</td>
+                    <td>23</td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </body>
 </html>

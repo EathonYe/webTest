@@ -5,21 +5,78 @@
     <title>Login</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
     <style>
+        html {
+            height: 100%;
+        }
+        body {
+            height: 100%;
+            display: flex;
+            align-items: flex-start;
+            background:#1ca5c7;
+            background:-moz-radial-gradient(center, ellipse cover,  #1ca5c7 0%, #16547b 100%);
+            background:-webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#1ca5c7), color-stop(100%,#16547b));
+            background:-webkit-radial-gradient(center, ellipse cover,  #1ca5c7 0%,#16547b 100%);
+            background:-o-radial-gradient(center, ellipse cover,  #1ca5c7 0%,#16547b 100%);
+            background:-ms-radial-gradient(center, ellipse cover,  #1ca5c7 0%,#16547b 100%);
+            background:radial-gradient(ellipse at center,  #1ca5c7 0%,#16547b 100%);
+            filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#1ca5c7', endColorstr='#16547b',GradientType=1 );
+            background-repeat:no-repeat;
+            background-attachment:fixed;
+            font-family:Raleway;
+            text-align:center;
+            color:#fff;
+            overflow: hidden;
+        }
         .container {
+            width: 500px;
             margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .text-right {
+            text-align: right;
+        }
+        .code {
+            font-family: Arial;
+            font-style: italic;
+            font-weight: bold;
+            border: 0;
+            letter-spacing: 3px;
+            color: blue;
+            /*margin-left: -20px;*/
         }
     </style>
 </head>
 <body>
     <div class="container">
         <form action="" method="">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" name="username" placeholder="用户名">
+            <div class="row form-group">
+                <div class="col-sm-4 text-right">
+                    <label for="username">Username</label>
+                </div>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="username" name="username" placeholder="用户名">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Password">
+            <div class="row form-group">
+                <div class="col-sm-4 text-right">
+                    <label for="password">Password</label>
+                </div>
+                <div class="col-sm-6">
+                    <input type="password" class="form-control" id="password" placeholder="Password">
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm-4 text-right">
+                    <label for="rand">Rand</label>
+                </div>
+                <div class="col-sm-3">
+                    <input type="Rand" class="form-control" id="Rand" placeholder="Rand">
+                </div>
+                <div class="col-sm-3">
+                    <input type="button" id="checkCode" class="code btn btn-info form-control" onclick="createCode()" />
+                </div>
             </div>
             <div class="form-group" style="text-align: center">
                 <input type="submit" value="Submit" class="btn btn-success">
@@ -28,8 +85,47 @@
         </form>
     </div>
 
+    <!--<div>-->
+        <!--<input type="text" id="input" />-->
+        <!--<input type="button" id="checkCode" class="code" onclick="createCode()" />-->
+        <!--<a href="#" onclick="createCode()">看不清楚</a><br>-->
+        <!--<input type="button" value="验证" onclick="validate()" />-->
+    <!--</div>-->
+
     <script src="js/jquery.min.js"></script>
     <script>
+
+        var code; //在全局定义验证码
+        //产生验证码
+        window.onload = function() {
+            createCode();
+        }
+
+        function createCode() {
+            code = "";
+            var codeLength = 5; //验证码的长度
+            var checkCode = document.getElementById("checkCode");
+            var random = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
+                'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'); //随机数
+            for(var i = 0; i < codeLength; i++) { //循环操作
+                var charIndex = Math.floor(Math.random() * 36); //取得随机数的索引
+                code += random[charIndex]; //根据索引取得随机数加到code上
+            }
+            checkCode.value = code; //把code值赋给验证码
+        }
+        //校验验证码
+        function validate() {
+            var inputCode = document.getElementById("input").value.toUpperCase(); //取得输入的验证码并转化为大写
+            if(inputCode.length <= 0) { //若输入的验证码长度为0
+                alert("请输入验证码！"); //则弹出请输入验证码
+            } else if(inputCode != code) { //若输入的验证码与产生的验证码不一致时
+                alert("验证码输入错误！"); //则弹出验证码输入错误
+                createCode(); //刷新验证码
+            } else { //输入正确时
+                alert("^-^"); //弹出^-^
+            }
+        }
+
         $('[type=submit]').on('click', function (e) {
             e.preventDefault();
 

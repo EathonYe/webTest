@@ -18,6 +18,23 @@
             font-size: 16px;
             color: #333;
         }
+        .text-right {
+            text-align: right;
+            padding-right: 20px;
+        }
+        .panel-heading {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        tr {
+            margin: 10px;
+        }
+        td,th {
+            text-align: center;
+        }
+        #myModal td {
+            width:50%;
+        }
     </style>
 </head>
 <body>
@@ -26,38 +43,127 @@
         <div style="text-align: right;padding: 20px 0px;">
             <input type="text" class="my-input" placeholder="search.">
             <div class="btn-group" role="group">
-                <button class="btn btn-warning"><span class="glyphicon glyphicon-search">&nbsp;</span>查询</button>
-                <button class="btn btn-primary"><span class="glyphicon glyphicon-plus">&nbsp;</span>添加</button>
-                <button class="btn btn-info"><span class="glyphicon glyphicon-pencil">&nbsp;</span>编辑</button>
-                <button class="btn btn-danger"><sapn class="glyphicon glyphicon-trash">&nbsp;</sapn>删除</button>
+                <button id="query" class="btn btn-warning"><span class="glyphicon glyphicon-search">&nbsp;</span>查询</button>
+                <button id="insert" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus">&nbsp;</span>添加</button>
+                <button id="update" class="btn btn-info"><span class="glyphicon glyphicon-pencil">&nbsp;</span>编辑</button>
+                <button id="delete" class="btn btn-danger"><sapn class="glyphicon glyphicon-trash">&nbsp;</sapn>删除</button>
             </div>
         </div>
 
         <div class="panel panel-success">
-            <div class="panel-heading">Panel heading.</div>
-            <table class="table">
-                <tr>
-                    <th>Name</th>
-                    <th>sex</th>
-                    <th>age</th>
-                </tr>
-                <tr>
-                    <td>Eathon</td>
-                    <td>男</td>
-                    <td>23</td>
-                </tr>
-                <tr>
-                    <td>Eathon</td>
-                    <td>男</td>
-                    <td>23</td>
-                </tr>
-                <tr>
-                    <td>Eathon</td>
-                    <td>男</td>
-                    <td>23</td>
-                </tr>
+            <div class="panel-heading">User Messages</div>
+            <!--<table class="table">-->
+                <!--<tr>-->
+                    <!--<th>Name</th>-->
+                    <!--<th>sex</th>-->
+                    <!--<th>age</th>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td>Eathon</td>-->
+                    <!--<td>男</td>-->
+                    <!--<td>23</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td>Eathon</td>-->
+                    <!--<td>男</td>-->
+                    <!--<td>23</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td>Eathon</td>-->
+                    <!--<td>男</td>-->
+                    <!--<td>23</td>-->
+                <!--</tr>-->
+            <!--</table>-->
+            <table class="table table-hover">
+                <thead id="titleList">
+                </thead>
+                <tbody id="tableList">
+                </tbody>
             </table>
         </div>
     </div>
+
+    <!--Handlebars.js模版放在script标签中，保留了html原有层次结构,模版中要写一些操作语句-->
+    <!--id可以用来唯一确定一个模版,type是模版固定的写法-->
+    <script id="title-template" type="text/x-handlebars-template">
+        <tr>
+            <th>Name</th>
+            <th>Sex</th>
+            <th>Age</th>
+        </tr>
+    </script>
+    <script id="seller-template" type="text/x-handlebars-template">
+        {{#each this}}
+        <tr>
+            <td>{{name}}</td>
+            <td>{{#if name}}woman{{else}}man{{/if}}</td>
+            <td>{{age}}</td>
+        </tr>
+        {{/each}}
+    </script>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Add user</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table-striped">
+                        <tr>
+                            <td class="text-right">
+                                <div class="form-group">
+                                    <label for="">Name:</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="add-name">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">
+                                <div class="form-group">
+                                    <label for="">Sex:</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <select class="form-control" id="add-sex">
+                                        <option value="0">female</option>
+                                        <option value="1">male</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">
+                                <div class="form-group">
+                                    <label for="">Age:</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="number" class="form-control" id="add-age">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="addUser">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/handlebars-v4.0.5.js"></script>
+<script src="../js/queryUser.js"></script>
+<link rel="stylesheet" href="../js/toastr/toastr.css">
+<script src="../js/toastr/toastr.js"></script>
 </html>

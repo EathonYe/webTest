@@ -1,9 +1,8 @@
 package impl;
 
-import bean.Customer;
-
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
-public interface Mapper {
-  Customer mapRow(ResultSet res);
+public interface Mapper<T> {
+  ArrayList<T> mapRow(ResultSet res);
 }

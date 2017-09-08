@@ -84,6 +84,10 @@ $(document).ready(function () {
             x0p('message', 'Please selected.');
         }
     })
+
+    $('#query').on('click', function () {
+        query();
+    })
 });
 
 function query() {
@@ -91,7 +95,8 @@ function query() {
         url: '/operate.user.webTest',
         type: 'get',
         data: {
-            flag: 'query'
+            flag: 'query',
+            name: $('#nameSearch').val()
         },
         success: function (resData) {
             var data = resData.rows;

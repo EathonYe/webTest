@@ -9,8 +9,12 @@ public class CustomerService {
 
   CustomerDao customerDao = new CustomerDao();
 
-  public ArrayList query() {
-    return customerDao.query("select * from user");
+  public ArrayList query(String name) {
+    if(name != null) {
+      return customerDao.query("select * from user where name like '%" + name + "%'");
+    }else {
+      return customerDao.query("select * from user");
+    }
   }
 
   public int insert(Customer customer) {

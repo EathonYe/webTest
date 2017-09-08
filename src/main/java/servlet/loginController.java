@@ -74,7 +74,7 @@ public class loginController extends HttpServlet {
       selectRes.last(); //结果集指针知道最后一行数据
       int n = selectRes.getRow();
 //      System.out.println(n);
-      System.out.println(selectRes.getString("数据库取得的密码：" + "password"));
+      System.out.println("数据库取得的密码：" + selectRes.getString("password"));
       if(n > 0 && selectRes.getString("password").equals(password)) {
         result.put("message", "成功");
         result.put("success", true);

@@ -12,10 +12,11 @@
             outline: none;
             transition: width 0.5s;
             color: #aeaeae;
+            font-size: 15px;
         }
         .my-input:focus {
-            width: 250px;
-            font-size: 16px;
+            width: 260px;
+            font-size: 17px;
             color: #333;
         }
         .text-right {
@@ -41,7 +42,7 @@
 
     <div class="container">
         <div style="text-align: right;padding: 20px 0px;">
-            <input type="text" class="my-input" placeholder="search.">
+            <input type="text" class="my-input" placeholder="Name search." id="nameSearch">
             <div class="btn-group" role="group">
                 <button id="query" class="btn btn-warning"><span class="glyphicon glyphicon-search">&nbsp;</span>查询</button>
                 <button id="insert" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus">&nbsp;</span>添加</button>

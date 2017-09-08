@@ -30,7 +30,7 @@ public class customerController extends HttpServlet {
 
     if(flag.equals("query")) { // 查询处理
 
-      ArrayList res = customerService.query();
+      ArrayList res = customerService.query(request.getParameter("name"));
       result.put("rows", res);
       result.put("success", true);
 

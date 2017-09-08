@@ -74,7 +74,7 @@ public class loginController extends HttpServlet {
       selectRes.last(); //结果集指针知道最后一行数据
       int n = selectRes.getRow();
 //      System.out.println(n);
-      System.out.println(selectRes.getString("password"));
+      System.out.println(selectRes.getString("数据库取得的密码：" + "password"));
       if(n > 0 && selectRes.getString("password").equals(password)) {
         result.put("message", "成功");
         result.put("success", true);
@@ -86,7 +86,7 @@ public class loginController extends HttpServlet {
         int id = Integer.parseInt(selectRes.getString("id"));
         selectSql = "UPDATE login SET loginCount=" + (loginCount+1) + " where id=" + id;
         long updateRes = stmt.executeUpdate(selectSql);
-        System.out.print("UPDATE:" + updateRes + "\n");
+        System.out.print("UPDATE Count:" + updateRes + "\n");
       }
 
     } catch (Exception e) {

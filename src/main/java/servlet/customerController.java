@@ -27,13 +27,35 @@ public class customerController extends HttpServlet {
     request.setCharacterEncoding("utf-8");
     String flag = request.getParameter("flag");
     JSONObject result = new JSONObject();
-    if(flag.equals("query")) {
+
+    if(flag.equals("query")) { // 查询处理
 
       ArrayList res = customerService.query();
       result.put("rows", res);
       result.put("success", true);
 
-    } else if(flag.equals("insert")) {
+    }
+
+    response.setContentType("application/json;charset=UTF-8");
+    response.setCharacterEncoding("UTF-8");
+    PrintWriter pw = response.getWriter();
+    pw.println(result.toString());
+  }
+
+  protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    request.setCharacterEncoding("utf-8");
+    String flag = request.getParameter("flag");
+    JSONObject result = new JSONObject();
+
+    if(flag.equals("delete")) { // 删除处理
+      int id = Integer.parseInt(request.getParameter("id"));
+      int res = customerService.delete(id);
+      if(res == 0) {
+        result.put("success", false);
+      }else if(res > 0) {
+        result.put("success", true);
+      }
+    } else if(flag.equals("insert")) { // 插入处理
 
       String name = request.getParameter("name");
       int age = Integer.parseInt(request.getParameter("age"));

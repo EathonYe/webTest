@@ -18,14 +18,17 @@ $(document).ready(function () {
         'progressBar' : true
     };
 
-   $('#addUser').on('click', function () {
+    $('#close').on('click', function () {
+        $('#userForm')[0].reset();
+    });
+    $('#addUser').on('click', function () {
        var name = $('#add-name').val();
        var sex = $('#add-sex').val();
        var age = $('#add-age').val();
        if(name && sex && age) {
            $.ajax({
                url: '/operate.user.webTest',
-               type: 'get',
+               type: 'post',
                data: {
                    flag: 'insert',
                    name: name,
@@ -35,9 +38,9 @@ $(document).ready(function () {
                success: function (resData) {
                    if(resData.success === true) {
                        toastr.success("successful");
-                       setTimeout(function () {
-                           window.location.reload();
-                       }, 1000);
+                       $('#myModal').modal('hide');
+                       query();
+                       $('#userForm')[0].reset();
                    }else {
                         toastr.error("failed");
                    }
@@ -46,8 +49,41 @@ $(document).ready(function () {
 
                }
            });
+       }else {
+           toastr.error("请正确填写各项", "提示");
+           console.log($('[name=userId]:checked').val());
        }
    })
+
+    $('#delete').on('click', function () {
+        if($('[name=userId]:checked').val()) {
+            x0p('Confirmation', 'Are you sure to delete the item?', 'warning', function (button) {
+                if(button == 'warning') {
+                    $.ajax({
+                        url: '/operate.user.webTest',
+                        type: 'post',
+                        data: {
+                            flag: 'delete',
+                            id: $('[name=userId]:checked').val()
+                        },
+                        success: function (data) {
+                            if(data.success == true) {
+                                x0p('Your operation is successful.');
+                                query();
+                            }else {
+                                x0p('error', 'Failed to delete this item.');
+                            }
+                        },
+                        error: function () {
+
+                        }
+                    })
+                }
+            });
+        }else {
+            x0p('message', 'Please selected.');
+        }
+    })
 });
 
 function query() {

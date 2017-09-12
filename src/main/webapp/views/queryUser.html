@@ -99,7 +99,7 @@
         <tr>
             <td><input type="radio" value="{{id}}" name="userId"></td>
             <td>{{name}}</td>
-            <td>{{#if name}}female{{else}}male{{/if}}</td>
+            <td>{{#if sex}}male{{else}}female{{/if}}</td>
             <td>{{age}}</td>
         </tr>
         {{/each}}
@@ -144,8 +144,54 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" id="close">Close</button>
+                    <button type="button" class="btn btn-default modalClose" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" id="addUser">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="MyModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Update user message</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="" id="updateUserForm" class="">
+                        <div class="form-group row">
+                            <div class="col-sm-4 text-right">
+                                <label for="update-name">Name:</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="update-name">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-4 text-right">
+                                <label for="update-sex">Sex:</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <select class="form-control" id="update-sex">
+                                    <option value="0">female</option>
+                                    <option value="1">male</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-4 text-right">
+                                <label for="add-age">Age:</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="number" class="form-control" id="update-age">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default modalClose" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="updateUser">Update</button>
                 </div>
             </div>
         </div>

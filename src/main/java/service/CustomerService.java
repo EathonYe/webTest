@@ -9,9 +9,11 @@ public class CustomerService {
 
   CustomerDao customerDao = new CustomerDao();
 
-  public ArrayList query(String name) {
-    if(name != null) {
-      return customerDao.query("select * from user where name like '%" + name + "%'");
+  public ArrayList query(Customer customer) {
+    if(customer.getName() != null) {
+      return customerDao.query("select * from user where name like '%" + customer.getName() + "%'");
+    }else if(String.valueOf(customer.getId()) != null) {
+      return customerDao.query("select * from user where id=" + customer.getId());
     }else {
       return customerDao.query("select * from user");
     }
@@ -25,6 +27,20 @@ public class CustomerService {
   public int delete(int id) {
     String deleteSql = "delete from user where id=" + id;
     return customerDao.executeUpdate(deleteSql);
+  }
+
+  public int update(Customer customer) {
+    String updateSql = "update user set ";
+    if(customer.getName() != null) {
+      updateSql += "name='" + customer.getName() + "'";
+    }
+    if(new Integer(customer.getSex()) != null) {
+      updateSql += ",sex=" + customer.getSex();
+    }if(new Integer(customer.getAge()) != null) {
+      updateSql += ",age=" + customer.getAge();
+    }
+    updateSql += " where id = " + customer.getId();
+    return customerDao.executeUpdate(updateSql);
   }
 
 }

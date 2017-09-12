@@ -18,8 +18,9 @@ $(document).ready(function () {
         'progressBar' : true
     };
 
-    $('#close').on('click', function () {
+    $('.modalClose').on('click', function () {
         $('#userForm')[0].reset();
+        $('#updateUserForm')[0].reset();
     });
     $('#addUser').on('click', function () {
        var name = $('#add-name').val();
@@ -51,9 +52,33 @@ $(document).ready(function () {
            });
        }else {
            toastr.error("请正确填写各项", "提示");
-           console.log($('[name=userId]:checked').val());
        }
    })
+
+    $('#update').on('click', function () {
+        if($('[type=radio]:checked').length) {
+            $.ajax({
+                url: '/operate.user.webTest',
+                type: 'get',
+                data: {
+                    flag: 'query',
+                    id: $('[type=radio]:checked').val()
+                },
+                success: function (resData) {
+                    var data = resData.rows[0];
+                    $('#update-name').val(data.name);
+                    $('#update-sex').val(data.sex);
+                    $('#update-age').val(data.age);
+                    $('#MyModal').modal('show');
+                },
+                error: function () {
+                    
+                }
+            })
+        }else {
+            x0p('error', 'Please check a item.')
+        }
+    })
 
     $('#delete').on('click', function () {
         if($('[name=userId]:checked').val()) {
@@ -87,6 +112,40 @@ $(document).ready(function () {
 
     $('#query').on('click', function () {
         query();
+    })
+
+    $('#updateUser').on('click', function () {
+        var name = $('#update-name').val();
+        var sex = $('#update-sex').val();
+        var age = $('#update-age').val();
+        if(name && sex && age) {
+            $.ajax({
+                url: '/operate.user.webTest',
+                type: 'post',
+                data: {
+                    flag: 'update',
+                    name: name,
+                    sex: sex,
+                    age: age,
+                    id: $('[type=radio]:checked').val()
+                },
+                success: function (resData) {
+                    if(resData.success === true) {
+                        toastr.success("successful");
+                        $('#MyModal').modal('hide');
+                        query();
+                        $('#updateUserForm')[0].reset();
+                    }else {
+                        toastr.error("failed");
+                    }
+                },
+                error: function () {
+
+                }
+            });
+        }else {
+            toastr.error("请正确填写各项", "提示");
+        }
     })
 });
 

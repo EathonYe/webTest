@@ -26,11 +26,28 @@ public class customerController extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     request.setCharacterEncoding("utf-8");
     String flag = request.getParameter("flag");
+
+    Customer customer = new Customer();
+    String name = request.getParameter("name");
+    customer.setName(name);
+    if(request.getParameter("age") != null) {
+      int age = Integer.parseInt(request.getParameter("age"));
+      customer.setAge(age);
+    }
+    if(request.getParameter("sex") != null) {
+      int sex = Integer.parseInt(request.getParameter("sex"));
+      customer.setSex(sex);
+    }
+    if(request.getParameter("id") != null) {
+      int id = Integer.parseInt(request.getParameter("id"));
+      customer.setId(id);
+    }
+
     JSONObject result = new JSONObject();
 
     if(flag.equals("query")) { // 查询处理
 
-      ArrayList res = customerService.query(request.getParameter("name"));
+      ArrayList res = customerService.query(customer);
       result.put("rows", res);
       result.put("success", true);
 
@@ -45,25 +62,33 @@ public class customerController extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     request.setCharacterEncoding("utf-8");
     String flag = request.getParameter("flag");
+
+    Customer customer = new Customer();
+    String name = request.getParameter("name");
+    customer.setName(name);
+    if(request.getParameter("age") != null) {
+      int age = Integer.parseInt(request.getParameter("age"));
+      customer.setAge(age);
+    }
+    if(request.getParameter("sex") != null) {
+      int sex = Integer.parseInt(request.getParameter("sex"));
+      customer.setSex(sex);
+    }
+    if(request.getParameter("id") != null) {
+      int id = Integer.parseInt(request.getParameter("id"));
+      customer.setId(id);
+    }
+
     JSONObject result = new JSONObject();
 
     if(flag.equals("delete")) { // 删除处理
-      int id = Integer.parseInt(request.getParameter("id"));
-      int res = customerService.delete(id);
+      int res = customerService.delete(customer.getId());
       if(res == 0) {
         result.put("success", false);
       }else if(res > 0) {
         result.put("success", true);
       }
     } else if(flag.equals("insert")) { // 插入处理
-
-      String name = request.getParameter("name");
-      int age = Integer.parseInt(request.getParameter("age"));
-      int sex = Integer.parseInt(request.getParameter("sex"));
-      Customer customer = new Customer();
-      customer.setName(name);
-      customer.setSex(sex);
-      customer.setAge(age);
 
       int res = customerService.insert(customer);
       if(res == 0) {
@@ -72,6 +97,13 @@ public class customerController extends HttpServlet {
         result.put("success", true);
       }
 
+    } else if(flag.equals("update")) { // 更新处理
+      int res = customerService.update(customer);
+      if(res == 0) {
+        result.put("success", false);
+      }else if(res > 0) {
+        result.put("success", true);
+      }
     }
 
     response.setContentType("application/json;charset=UTF-8");

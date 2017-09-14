@@ -2,6 +2,7 @@ package service;
 
 import bean.Customer;
 import dao.CustomerDao;
+import net.sf.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -9,13 +10,31 @@ public class CustomerService {
 
   CustomerDao customerDao = new CustomerDao();
 
-  public ArrayList query(Customer customer) {
-    if(customer.getName() != null) {
-      return customerDao.query("select * from user where name like '%" + customer.getName() + "%'");
-    }else if(String.valueOf(customer.getId()) != null) {
-      return customerDao.query("select * from user where id=" + customer.getId());
-    }else {
-      return customerDao.query("select * from user");
+  public JSONObject query(Customer customer) {
+//    if(customer.getName().equals(""))
+//      System.out.println("空字符串");
+    System.out.println(customer.getPageSize());
+    JSONObject result = new JSONObject();
+    String limit = " limit " + (customer.getPageNumber()-1)*customer.getPageSize() + "," + customer.getPageSize();
+    if(customer.getName() != null) { // 姓名模糊查询
+      String sql = " from user where name like '%" + customer.getName() + "%'";
+      ArrayList list = customerDao.query("select *" + sql + limit);
+      int total = customerDao.queryTotal("select count(*) as count" + sql);
+      result.put("pages", Math.ceil((double) total/customer.getPageSize()));
+      result.put("rows", list);
+      return result;
+    }else if(new Integer(customer.getId()) != null) { // 通过id查找单条数据
+      String sql = " from user where id=" + customer.getId();
+      int total = customerDao.queryTotal("select count(*) as count" + sql);
+      result.put("pages", Math.ceil((double) total/customer.getPageSize()));
+      result.put("rows", customerDao.query("select *" + sql));
+      return result;
+    }else { // 查询所有数据
+      String sql = " from user" + limit;
+      int total = customerDao.queryTotal("select count(*) as count from user");
+      result.put("pages", Math.ceil((double) total/customer.getPageSize()));
+      result.put("rows", customerDao.query("select *" + sql));
+      return result;
     }
   }
 

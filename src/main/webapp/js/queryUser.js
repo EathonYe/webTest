@@ -1,5 +1,5 @@
 $(document).ready(function () {
-   query();
+   paging(1);
 
     /* 弹窗插件 */
     toastr.options = {
@@ -40,7 +40,7 @@ $(document).ready(function () {
                    if(resData.success === true) {
                        toastr.success("successful");
                        $('#myModal').modal('hide');
-                       query();
+                       paging(1);
                        $('#userForm')[0].reset();
                    }else {
                         toastr.error("failed");
@@ -94,7 +94,7 @@ $(document).ready(function () {
                         success: function (data) {
                             if(data.success == true) {
                                 x0p('Your operation is successful.');
-                                query();
+                                paging(1);
                             }else {
                                 x0p('error', 'Failed to delete this item.');
                             }
@@ -111,7 +111,7 @@ $(document).ready(function () {
     })
 
     $('#query').on('click', function () {
-        query();
+        paging(1);
     })
 
     $('#updateUser').on('click', function () {
@@ -133,7 +133,7 @@ $(document).ready(function () {
                     if(resData.success === true) {
                         toastr.success("successful");
                         $('#MyModal').modal('hide');
-                        query();
+                        paging(1);
                         $('#updateUserForm')[0].reset();
                     }else {
                         toastr.error("failed");
@@ -149,11 +149,12 @@ $(document).ready(function () {
     })
 });
 
-function query() {
+function paging(page) {
     $.ajax({
         url: '/operate.user.webTest',
         type: 'get',
         data: {
+            pageNumber: page,
             flag: 'query',
             name: $('#nameSearch').val()
         },
@@ -164,6 +165,29 @@ function query() {
             // 把数据装入预编译后的页面
             $('#tableList').html(template(data));
             $('#titleList').html(titleTemplate(data));
+
+            var pages = resData.pages;
+            var options = {
+                currentPage: page,//当前页面
+                numberOfPages: 5,//一页显示几个按钮（在ul里面生成5个li）
+                totalPages:pages, //总页数
+                itemTexts: function (type, page, current) {
+                    switch (type) {
+                        case "first":
+                            return "首页";
+                        case "prev":
+                            return "上一页";
+                        case "next":
+                            return "下一页";
+                        case "last":
+                            return "尾页";
+                        case "page":
+                            return page;
+                    }
+                }
+            }  ;
+            $('#page_info').html("当前第" + page + "/" + pages + "页");
+            $('#page_nav').bootstrapPaginator(options);
         },
         error: function () {
 

@@ -81,5 +81,41 @@ public class CustomerDao {
     return result;
   }
 
+  public int queryTotal(String querySql) {
+    int total = 0;
+    try {
+      Class.forName("com.mysql.jdbc.Driver").newInstance(); //MYSQL注册驱动程序
+      con = DriverManager.getConnection("jdbc:mysql://localhost:3306/webtest?characterEncoding=utf-8&serverTimezone=UTC", "root", "123456"); //链接本地MYSQL
+      stmt = con.createStatement();
+
+      res = stmt.executeQuery(querySql);
+
+      if(res.next()) {
+        total = res.getInt("count");
+        System.out.println(total);
+      }
+
+    } catch (Exception e) {
+      System.out.print("MYSQL ERROR:" + e.getMessage());
+    } finally {
+      try {
+        con.close();
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+      try {
+        stmt.close();
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+      try {
+        res.close();
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    }
+
+    return total;
+  }
 
 }

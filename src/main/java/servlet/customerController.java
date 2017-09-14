@@ -28,8 +28,16 @@ public class customerController extends HttpServlet {
     String flag = request.getParameter("flag");
 
     Customer customer = new Customer();
+
+    Integer pageNumber = new Integer(Integer.parseInt(request.getParameter("pageNumber")));
+    if(pageNumber != null) {
+      customer.setPageNumber(pageNumber);
+    }
+
     String name = request.getParameter("name");
-    customer.setName(name);
+    if(name != null) {
+      customer.setName(name);
+    }
     if(request.getParameter("age") != null) {
       int age = Integer.parseInt(request.getParameter("age"));
       customer.setAge(age);
@@ -47,10 +55,9 @@ public class customerController extends HttpServlet {
 
     if(flag.equals("query")) { // 查询处理
 
-      ArrayList res = customerService.query(customer);
-      result.put("rows", res);
-      result.put("success", true);
-
+      JSONObject res = customerService.query(customer);
+      res.put("success", true);
+      result = res;
     }
 
     response.setContentType("application/json;charset=UTF-8");
@@ -64,6 +71,7 @@ public class customerController extends HttpServlet {
     String flag = request.getParameter("flag");
 
     Customer customer = new Customer();
+
     String name = request.getParameter("name");
     customer.setName(name);
     if(request.getParameter("age") != null) {
@@ -114,16 +122,3 @@ public class customerController extends HttpServlet {
 
 }
 
-//class QueryUser extends HttpServlet {
-//  private CustomerService customerService = new CustomerService();
-//
-//  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//    request.setCharacterEncoding("utf-8");
-//    ArrayList result = customerService.query();
-//
-//    response.setContentType("application/json;charset=UTF-8");
-//    response.setCharacterEncoding("UTF-8");
-//    PrintWriter pw = response.getWriter();
-//    pw.println(JSONArray.fromObject(result).toString());
-//  }
-//}

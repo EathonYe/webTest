@@ -1,6 +1,6 @@
 package bean;
 
-public class Customer {
+public class Customer extends Page {
 
   private int id;
   private String name;

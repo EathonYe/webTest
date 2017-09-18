@@ -13,7 +13,8 @@ public class CustomerService {
   public JSONObject query(Customer customer) {
 //    if(customer.getName().equals(""))
 //      System.out.println("空字符串");
-    System.out.println(customer.getPageSize());
+    System.out.println("查询页数：" + customer.getPageNumber());
+    System.out.println("每页条数：" + customer.getPageSize());
     JSONObject result = new JSONObject();
     String limit = " limit " + (customer.getPageNumber()-1)*customer.getPageSize() + "," + customer.getPageSize();
     if(customer.getName() != null) { // 姓名模糊查询

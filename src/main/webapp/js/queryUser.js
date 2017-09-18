@@ -155,6 +155,7 @@ function paging(page) {
         type: 'get',
         data: {
             pageNumber: page,
+            pageSize: 5, // 可以不传，默认为5
             flag: 'query',
             name: $('#nameSearch').val()
         },

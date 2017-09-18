@@ -92,7 +92,7 @@ public class CustomerDao {
 
       if(res.next()) {
         total = res.getInt("count");
-        System.out.println(total);
+        System.out.println("total number:" + total);
       }
 
     } catch (Exception e) {

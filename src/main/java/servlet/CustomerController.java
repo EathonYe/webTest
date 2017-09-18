@@ -16,10 +16,10 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 @WebServlet(
-        name = "customerController",
+        name = "CustomerController",
         urlPatterns = {"/operate.user.webTest"}
 )
-public class customerController extends HttpServlet {
+public class CustomerController extends HttpServlet {
 
   private CustomerService customerService = new CustomerService();
 
@@ -27,12 +27,18 @@ public class customerController extends HttpServlet {
     request.setCharacterEncoding("utf-8");
     String flag = request.getParameter("flag");
 
+    // 将请求数据封装成实体类
     Customer customer = new Customer();
 
-    Integer pageNumber = new Integer(Integer.parseInt(request.getParameter("pageNumber")));
+    Integer pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
     if(pageNumber != null) {
       customer.setPageNumber(pageNumber);
     }
+    Integer pageSize = Integer.parseInt(request.getParameter("pageSize"));
+    if(pageSize != null) {
+      customer.setPageSize(pageSize);
+    }
+
 
     String name = request.getParameter("name");
     if(name != null) {
@@ -70,6 +76,7 @@ public class customerController extends HttpServlet {
     request.setCharacterEncoding("utf-8");
     String flag = request.getParameter("flag");
 
+    // 将请求数据封装成实体类
     Customer customer = new Customer();
 
     String name = request.getParameter("name");

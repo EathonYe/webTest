@@ -30,12 +30,14 @@ public class CustomerController extends HttpServlet {
     // 将请求数据封装成实体类
     Customer customer = new Customer();
 
-    Integer pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
-    if(pageNumber != null) {
+    String pageNum = request.getParameter("pageNumber");
+    if(pageNum != null) {
+      Integer pageNumber = Integer.parseInt(pageNum);
       customer.setPageNumber(pageNumber);
     }
-    Integer pageSize = Integer.parseInt(request.getParameter("pageSize"));
-    if(pageSize != null) {
+    String pageS = request.getParameter("pageSize");
+    if(pageS != null) {
+      Integer pageSize = Integer.parseInt(pageS);
       customer.setPageSize(pageSize);
     }
 

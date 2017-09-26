@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import bean.Admin;
-import mapper.LoginMapper;
+import api.entity.Admin;
 import net.sf.json.JSONObject;
+import service.LoginService;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class LoginController extends HttpServlet {
 
     JSONObject result = new JSONObject();
 
-    List<Admin> adminList = new LoginMapper().selectByName(admin);
+    List<Admin> adminList = new LoginService().selectByName(admin);
 
     if(adminList.size() > 0) {
       for(int i = 0; i < adminList.size(); i++) {
@@ -46,14 +46,6 @@ public class LoginController extends HttpServlet {
           admin.setLoginCount(adminList.get(i).getLoginCount());
           admin.setId(adminList.get(i).getId());
 
-          // 登陆次数加1
-          admin.setLoginCount(admin.getLoginCount() + 1);
-          int count = new LoginMapper().update(admin);
-          System.out.println("count:" + count);
-
-          PrintWriter pw = res.getWriter();
-          pw.println(result);
-
           break;
 
         }
@@ -61,9 +53,16 @@ public class LoginController extends HttpServlet {
     }else {
       result.put("success", false);
       result.put("message", "用户名或密码错误!!!");
+    }
 
-      PrintWriter pw = res.getWriter();
-      pw.println(result);
+    PrintWriter pw = res.getWriter();
+    pw.println(result);
+
+    if(result.get("success").equals(true)) {
+      // 登陆次数加1
+      admin.setLoginCount(admin.getLoginCount() + 1);
+      int count = new LoginService().updateLoginCount(admin);
+      System.out.println("loginCount是否更新成功:" + count);
     }
 
   }

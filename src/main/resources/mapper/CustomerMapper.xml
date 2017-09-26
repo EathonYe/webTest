@@ -2,7 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="mapper.TestMapper">
+<mapper namespace="mapper.CustomerMapper">
+    <resultMap id="CustomerResultMap" type="bean.Customer">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="sex" column="sex"/>
+        <result property="age" column="age"/>
+    </resultMap>
     <!-- 在select标签中编写查询的SQL语句，
 设置select标签的id属性为getUser，id属性值必须是唯一的，不能够重复
 
@@ -20,8 +26,19 @@ resultType="bean.Customer"就表示将查询结果封装成一个User类的对�
         select * from user where id=#{id}
     </select>
 
-    <select id="getUserList" resultType="bean.Customer">
-        SELECT * FROM USER
-    </select>
-
+    <update id="updateCustomer" parameterType="bean.Customer">
+        update user
+            <set>
+                <if test="name != null">
+                    name = #{name},
+                </if>
+                <if test="sex != null">
+                    sex =#{sex},
+                </if>
+                <if test="age != null">
+                    age = #{age}
+                </if>
+            </set>
+        where id = #{id}
+    </update>
 </mapper>

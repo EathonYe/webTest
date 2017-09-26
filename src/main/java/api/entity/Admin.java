@@ -1,4 +1,4 @@
-package bean;
+package api.entity;
 
 public class Admin {
   private int id;

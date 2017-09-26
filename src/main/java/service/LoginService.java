@@ -1,18 +1,19 @@
-package mapper;
+package service;
 
-import bean.Admin;
+import api.entity.Admin;
+import api.mapper.LoginMapper;
 import org.apache.ibatis.session.SqlSession;
 import utils.MybatisUtils;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoginMapper {
-
-  public LoginMapper() throws IOException {
-  }
-
+public class LoginService {
+  /**
+   * 通过姓名搜索管理员
+   * @param admin
+   * @return
+   */
   public List<Admin> selectByName(Admin admin) {
     SqlSession session = MybatisUtils.getSqlSession();
 
@@ -20,9 +21,9 @@ public class LoginMapper {
 
     try {
 
-      String statement = "mapper.LoginMapper.getAdminList";//映射sql的标识字符串
+      LoginMapper loginMapper = session.getMapper(LoginMapper.class);
 
-      adminList = session.selectList(statement, admin); // 获取一个对象列表
+      adminList = loginMapper.selectByName(admin);
 
     } catch (Exception e) {
 
@@ -42,19 +43,21 @@ public class LoginMapper {
     return adminList;
   }
 
-  public int update(Admin admin) {
-
+  /**
+   * 更新登陆次数
+   * @param admin
+   * @return
+   */
+  public int updateLoginCount(Admin admin) {
     SqlSession session = MybatisUtils.getSqlSession();
 
     int result = 0;
 
     try {
 
-      String statement = "mapper.LoginMapper.updateAdmin";
+      LoginMapper loginMapper = session.getMapper(LoginMapper.class);
 
-      result = session.update(statement, admin);
-
-      session.commit();
+      result = loginMapper.updateLoginCount(admin);
 
     } catch (Exception e) {
 

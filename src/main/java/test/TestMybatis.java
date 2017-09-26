@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import api.mapper.TestMapper;
 import bean.Customer;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -37,10 +38,13 @@ public class TestMybatis {
     Customer customer = new Customer();
     customer.setId(2);
     // 获取一个实体对象
-    Customer user = session.selectOne(statement1, customer);
+//    Customer user = session.selectOne(statement1, customer);
+    TestMapper testMapper = session.getMapper(TestMapper.class);
+    Customer user = testMapper.getUser(customer);
     System.out.println("name: " + user.getName() + ";age: " + user.getAge() + ";sex: " + user.getSex() + "; id: " + user.getId() );
     // 获取一个对象列表
-    List<Customer> userList = session.selectList(statement2);
+//    List<Customer> userList = session.selectList(statement2);
+    List<Customer> userList = testMapper.getUserList(customer);
     for(int i = 0; i < userList.size(); i++) {
       System.out.println(userList.get(i).getName());
     }

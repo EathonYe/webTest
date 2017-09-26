@@ -6,8 +6,8 @@
         <environment id="development">
             <transactionManager type="JDBC" />
             <!-- 配置数据库连接信息 -->
-            <dataSource type="POOLED">
-                <property name="driver" value="com.mysql.jdbc.Driver" />
+            <dataSource type="POOLED"> <!-- mybatis自己实现的连接池 -->
+                <property name="driver" value="com.mysql.jdbc.Driver" /> <!-- 驱动 -->
                 <property name="url"
                           value="jdbc:mysql://localhost:3306/webtest?serverTimezone=UTC" />
                 <property name="username" value="root" />
@@ -16,9 +16,9 @@
         </environment>
     </environments>
     <mappers>
-        <mapper resource="TestMapper.xml"/>
-        <mapper resource="LoginMapper.xml"/>
-        <mapper resource="CustomerMapper.xml"/>
+        <mapper resource="mapper/TestMapper.xml"/>
+        <mapper resource="mapper/LoginMapper.xml"/>
+        <mapper resource="mapper/CustomerMapper.xml"/>
 
     </mappers>
 </configuration>

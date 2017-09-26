@@ -1,7 +1,6 @@
 package dao;
 
 import bean.Customer;
-import impl.Mapper;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -36,17 +35,12 @@ public class CustomerDao {
       System.out.print("MYSQL ERROR:" + e.getMessage());
     } finally {
       try {
-        con.close();
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
-      try {
         stmt.close();
       } catch (SQLException e) {
         e.printStackTrace();
       }
       try {
-        res.close();
+        con.close();
       } catch (SQLException e) {
         e.printStackTrace();
       }
@@ -68,12 +62,12 @@ public class CustomerDao {
       System.out.print("MYSQL ERROR:" + e.getMessage());
     } finally {
       try {
-        con.close();
+        stmt.close();
       } catch (SQLException e) {
         e.printStackTrace();
       }
       try {
-        stmt.close();
+        con.close();
       } catch (SQLException e) {
         e.printStackTrace();
       }
@@ -99,17 +93,12 @@ public class CustomerDao {
       System.out.print("MYSQL ERROR:" + e.getMessage());
     } finally {
       try {
-        con.close();
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
-      try {
         stmt.close();
       } catch (SQLException e) {
         e.printStackTrace();
       }
       try {
-        res.close();
+        con.close();
       } catch (SQLException e) {
         e.printStackTrace();
       }

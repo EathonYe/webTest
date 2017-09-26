@@ -2,13 +2,16 @@ package service;
 
 import bean.Customer;
 import dao.CustomerDao;
+import mapper.CustomerMapper;
 import net.sf.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class CustomerService {
 
   CustomerDao customerDao = new CustomerDao();
+  CustomerMapper customerMapper = new CustomerMapper();
 
   public JSONObject query(Customer customer) {
 //    if(customer.getName().equals(""))
@@ -26,8 +29,6 @@ public class CustomerService {
       return result;
     }else if(new Integer(customer.getId()) != null) { // 通过id查找单条数据
       String sql = " from user where id=" + customer.getId();
-      int total = customerDao.queryTotal("select count(*) as count" + sql);
-      result.put("pages", Math.ceil((double) total/customer.getPageSize()));
       result.put("rows", customerDao.query("select *" + sql));
       return result;
     }else { // 查询所有数据
@@ -50,17 +51,22 @@ public class CustomerService {
   }
 
   public int update(Customer customer) {
-    String updateSql = "update user set ";
-    if(customer.getName() != null) {
-      updateSql += "name='" + customer.getName() + "'";
-    }
-    if(new Integer(customer.getSex()) != null) {
-      updateSql += ",sex=" + customer.getSex();
-    }if(new Integer(customer.getAge()) != null) {
-      updateSql += ",age=" + customer.getAge();
-    }
-    updateSql += " where id = " + customer.getId();
-    return customerDao.executeUpdate(updateSql);
+
+    return customerMapper.update("mapper.CustomerMapper.updateCustomer", customer);
+
+    // 原生实现更新
+//    String updateSql = "update user set ";
+//    if(customer.getName() != null) {
+//      updateSql += "name='" + customer.getName() + "'";
+//    }
+//    if(new Integer(customer.getSex()) != null) {
+//      updateSql += ",sex=" + customer.getSex();
+//    }if(new Integer(customer.getAge()) != null) {
+//      updateSql += ",age=" + customer.getAge();
+//    }
+//    updateSql += " where id = " + customer.getId();
+//    return customerDao.executeUpdate(updateSql);
+
   }
 
 }

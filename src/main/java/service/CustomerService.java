@@ -1,15 +1,18 @@
 package service;
 
 import api.entity.Customer;
+import api.mapper.CustomerMapper;
+import api.mapper.LoginMapper;
 import dao.CustomerDao;
 import net.sf.json.JSONObject;
+import org.apache.ibatis.session.SqlSession;
+import utils.MybatisUtils;
 
 import java.util.ArrayList;
 
 public class CustomerService {
 
   CustomerDao customerDao = new CustomerDao();
-  CustomerMapper customerMapper = new CustomerMapper();
 
   public JSONObject query(Customer customer) {
 //    if(customer.getName().equals(""))
@@ -50,7 +53,27 @@ public class CustomerService {
 
   public int update(Customer customer) {
 
-    return customerMapper.update("mapper.CustomerMapper.updateCustomer", customer);
+    SqlSession session = MybatisUtils.getSqlSession();
+
+    int result = 0;
+
+    try {
+
+      CustomerMapper customerMapper = session.getMapper(CustomerMapper.class);
+
+      result = customerMapper.updateCustomer(customer);
+
+    } catch (Exception e) {
+
+      e.printStackTrace();
+
+    } finally {
+
+      session.close();
+
+    }
+
+    return result;
 
     // 原生实现更新
 //    String updateSql = "update user set ";

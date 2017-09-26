@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="mapper.CustomerMapper">
-    <resultMap id="CustomerResultMap" type="bean.Customer">
+    <resultMap id="CustomerResultMap" type="api.entity.Customer">
         <result property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="sex" column="sex"/>
@@ -15,18 +15,18 @@
 使用parameterType属性指明查询时使用的参数类型，resultType属性指明查询返回的结果
 集类型
 
-resultType="bean.Customer"就表示将查询结果封装成一个User类的对象返回
+resultType="api.entity.Customer"就表示将查询结果封装成一个User类的对象返回
     User类就是users表所对应的实体类
     -->
     <!--
         根据id查询得到一个user对象
      -->
-    <select id="getUser" parameterType="bean.Customer"
-            resultType="bean.Customer">
+    <select id="getUser" parameterType="api.entity.Customer"
+            resultType="api.entity.Customer">
         select * from user where id=#{id}
     </select>
 
-    <update id="updateCustomer" parameterType="bean.Customer">
+    <update id="updateCustomer" parameterType="api.entity.Customer">
         update user
             <set>
                 <if test="name != null">

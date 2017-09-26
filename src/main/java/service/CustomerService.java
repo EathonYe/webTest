@@ -1,11 +1,9 @@
 package service;
 
-import bean.Customer;
+import api.entity.Customer;
 import dao.CustomerDao;
-import mapper.CustomerMapper;
 import net.sf.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class CustomerService {

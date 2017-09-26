@@ -1,6 +1,6 @@
 package dao;
 
-import bean.Customer;
+import api.entity.Customer;
 
 import java.sql.*;
 import java.util.ArrayList;

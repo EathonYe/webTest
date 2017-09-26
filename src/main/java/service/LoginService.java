@@ -57,7 +57,7 @@ public class LoginService {
 
       LoginMapper loginMapper = session.getMapper(LoginMapper.class);
 
-      result = loginMapper.updateLoginCount(admin);
+      result = loginMapper.updateAdmin(admin);
 
     } catch (Exception e) {
 

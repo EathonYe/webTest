@@ -1,6 +1,6 @@
 package api.mapper;
 
-import bean.Customer;
+import api.entity.Customer;
 
 import java.util.List;
 

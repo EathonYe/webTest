@@ -1,4 +1,4 @@
-package bean;
+package api.entity;
 
 public class Page {
   private Integer pageNumber = 1;

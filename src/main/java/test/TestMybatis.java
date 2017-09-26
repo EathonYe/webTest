@@ -31,8 +31,8 @@ public class TestMybatis {
      *
      getUser是select标签的id属性值，通过select标签的id属性值就可以找到要执行的SQL
      */
-    String statement1 = "mapper.loginMapper.getUser";//映射sql的标识字符串
-    String statement2 = "mapper.loginMapper.getUserList";//映射sql的标识字符串
+    String statement1 = "mapper.TestMapper.getUser";//映射sql的标识字符串
+    String statement2 = "mapper.TestMapper.getUserList";//映射sql的标识字符串
     //执行查询返回一个唯一user对象的sql
     Customer customer = new Customer();
     customer.setId(2);

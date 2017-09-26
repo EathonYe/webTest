@@ -8,9 +8,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class loginMapper {
+public class LoginMapper {
 
-  public loginMapper() throws IOException {
+  public LoginMapper() throws IOException {
   }
 
   public List<Admin> selectByName(Admin admin) {
@@ -20,7 +20,7 @@ public class loginMapper {
 
     try {
 
-      String statement = "mapper.loginMapper.getAdminList";//映射sql的标识字符串
+      String statement = "mapper.LoginMapper.getAdminList";//映射sql的标识字符串
 
       adminList = session.selectList(statement, admin); // 获取一个对象列表
 
@@ -50,7 +50,7 @@ public class loginMapper {
 
     try {
 
-      String statement = "mapper.loginMapper.updateAdmin";
+      String statement = "mapper.LoginMapper.updateAdmin";
 
       result = session.update(statement, admin);
 

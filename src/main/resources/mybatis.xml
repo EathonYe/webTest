@@ -16,6 +16,9 @@
         </environment>
     </environments>
     <mappers>
-        <mapper resource="loginMapper.xml"/>
+        <mapper resource="TestMapper.xml"/>
+        <mapper resource="LoginMapper.xml"/>
+        <mapper resource="CustomerMapper.xml"/>
+
     </mappers>
 </configuration>

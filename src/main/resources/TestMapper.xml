@@ -2,13 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="mapper.loginMapper">
-    <resultMap id="adminResultMap" type="bean.Admin">
-        <result property="id" column="id" />
-        <result property="username" column="username" />
-        <result property="password" column="password" />
-        <result property="loginCount" column="login_count" />
-    </resultMap>
+<mapper namespace="mapper.TestMapper">
     <!-- 在select标签中编写查询的SQL语句，
 设置select标签的id属性为getUser，id属性值必须是唯一的，不能够重复
 
@@ -30,12 +24,4 @@ resultType="bean.Customer"就表示将查询结果封装成一个User类的对�
         SELECT * FROM USER
     </select>
 
-    <select id="getAdminList" parameterType="bean.Admin"
-            resultMap="adminResultMap">
-        select * from admin where username=#{username}
-    </select>
-
-    <update id="updateAdmin" parameterType="bean.Admin">
-        update admin set login_count=#{loginCount} where id=#{id}
-    </update>
 </mapper>

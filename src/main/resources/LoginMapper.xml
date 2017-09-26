@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.LoginMapper">
+    <resultMap id="adminResultMap" type="bean.Admin">
+        <result property="id" column="id" />
+        <result property="username" column="username" />
+        <result property="password" column="password" />
+        <result property="loginCount" column="login_count" />
+    </resultMap>
+    <!-- 在select标签中编写查询的SQL语句，
+设置select标签的id属性为getUser，id属性值必须是唯一的，不能够重复
+
+使用parameterType属性指明查询时使用的参数类型，resultType属性指明查询返回的结果
+集类型
+
+resultType="bean.Customer"就表示将查询结果封装成一个User类的对象返回
+    User类就是users表所对应的实体类
+    -->
+    <!--
+        根据id查询得到一个user对象
+     -->
+    <select id="getUser" parameterType="bean.Customer"
+            resultType="bean.Customer">
+        select * from user where id=#{id}
+    </select>
+
+    <select id="getUserList" resultType="bean.Customer">
+        SELECT * FROM USER
+    </select>
+
+    <select id="getAdminList" parameterType="bean.Admin"
+            resultMap="adminResultMap">
+        select * from admin where username=#{username}
+    </select>
+
+    <update id="updateAdmin" parameterType="bean.Admin">
+        update admin set login_count=#{loginCount} where id=#{id}
+    </update>
+</mapper>

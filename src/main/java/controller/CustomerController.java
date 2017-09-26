@@ -1,4 +1,4 @@
-package servlet;
+package controller;
 
 import api.entity.Customer;
 import net.sf.json.JSONObject;

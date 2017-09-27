@@ -20,8 +20,45 @@ resultType="api.entity.Customer"就表示将查询结果封装成一个User类�
         select * from user where id=#{id}
     </select>
 
-    <select id="getUserList" resultType="api.entity.Customer">
+    <select id="getUserList" parameterType="api.entity.Customer" resultType="api.entity.Customer">
         SELECT * FROM USER
+        <where>
+            <if test="id != null and id != ''">
+                id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                AND name like #{name}
+            </if>
+            <if test="age != null and age != ''">
+                AND age = #{age}
+            </if>
+            <if test="sex != null and sex != ''">
+                AND sex = #{sex}
+            </if>
+        </where>
+        limit (#{pageNumber}-1)*#{pageSize},#{pageSize}
+    </select>
+
+    <!--<select id="getTotal" resultType="int">-->
+        <!--select count("user.id") as count FROM USER-->
+    <!--</select>-->
+
+    <select id="getTotal" parameterType="api.entity.Customer" resultType="int">
+        select count("user.id") as count FROM USER
+        <where>
+            <if test="id != null and id != ''">
+                id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                AND name like concat('%', #{name}, '%')
+            </if>
+            <if test="age != null and age != ''">
+                AND age = #{age}
+            </if>
+            <if test="sex != null and sex != ''">
+                AND sex = #{sex}
+            </if>
+        </where>
     </select>
 
 </mapper>

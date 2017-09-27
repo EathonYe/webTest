@@ -41,12 +41,18 @@ public class TestMybatis {
     TestMapper testMapper = session.getMapper(TestMapper.class);
     Customer user = testMapper.getUser(customer);
     System.out.println("name: " + user.getName() + ";age: " + user.getAge() + ";sex: " + user.getSex() + "; id: " + user.getId() );
+
+    System.out.println("获取一个对象列表:");
     // 获取一个对象列表
 //    List<Customer> userList = session.selectList(statement2);
-    List<Customer> userList = testMapper.getUserList(customer);
+    Customer customer1 = new Customer();
+    List<Customer> userList = testMapper.getUserList(customer1);
     for(int i = 0; i < userList.size(); i++) {
       System.out.println(userList.get(i).getName());
     }
+
+    int total = testMapper.getTotal();
+    System.out.println("总条数：" + total);
   }
 
 }

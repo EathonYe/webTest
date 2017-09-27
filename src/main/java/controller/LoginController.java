@@ -59,6 +59,7 @@ public class LoginController extends HttpServlet {
     pw.println(result);
 
     if(result.get("success").equals(true)) {
+      // 加入session
       // 登陆次数加1
       admin.setLoginCount(admin.getLoginCount() + 1);
       int count = new LoginService().updateLoginCount(admin);

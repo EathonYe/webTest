@@ -21,9 +21,42 @@ resultType="api.entity.Customer"就表示将查询结果封装成一个User类�
     <!--
         根据id查询得到一个user对象
      -->
-    <select id="getUser" parameterType="api.entity.Customer"
-            resultType="api.entity.Customer">
-        select * from user where id=#{id}
+    <select id="selectCustomer"
+            resultMap="CustomerResultMap">
+         select * from user
+        <where>
+            <if test="customer.id != null and customer.id != ''">
+                id = #{customer.id}
+            </if>
+            <if test="customer.name != null and customer.name != ''">
+                AND name like concat('%', #{customer.name}, '%')
+            </if>
+            <if test="customer.age != null and customer.age != ''">
+                AND age = #{customer.age}
+            </if>
+            <if test="customer.sex != null and customer.sex != ''">
+                AND sex = #{customer.sex}
+            </if>
+        </where>
+        limit #{offset}, #{customer.pageSize}
+    </select>
+
+    <select id="getTotal" parameterType="api.entity.Customer" resultType="int">
+        select count("user.id") as count FROM USER
+        <where>
+            <if test="id != null and id != ''">
+                id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                AND name like concat('%', #{name}, '%')
+            </if>
+            <if test="age != null and age != ''">
+                AND age = #{age}
+            </if>
+            <if test="sex != null and sex != ''">
+                AND sex = #{sex}
+            </if>
+        </where>
     </select>
 
     <update id="updateCustomer" parameterType="api.entity.Customer">
@@ -41,4 +74,14 @@ resultType="api.entity.Customer"就表示将查询结果封装成一个User类�
             </set>
         where id = #{id}
     </update>
+
+    <insert id="insertCustomer" parameterType="api.entity.Customer">
+        insert into user (name, sex, age)
+        VALUES
+        (#{name}, #{sex}, #{age})
+    </insert>
+
+    <delete id="deleteCustomer" parameterType="int">
+        delete from user where id = #{id}
+    </delete>
 </mapper>

@@ -8,4 +8,6 @@ public interface TestMapper {
   Customer getUser(Customer customer);
 
   List<Customer> getUserList(Customer customer);
+
+  int getTotal();
 }

@@ -5,6 +5,10 @@
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
 
+  <!--welcome pages-->
+  <welcome-file-list>
+    <welcome-file>login.html</welcome-file>
+  </welcome-file-list>
   <!--<servlet>-->
     <!--<servlet-name>Hello</servlet-name>-->
     <!--<servlet-class>Hello</servlet-class>-->
